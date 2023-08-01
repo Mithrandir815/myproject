@@ -1,0 +1,21 @@
+version: '3'
+services:
+  api:
+    image: golang:latest
+    build: .
+    volumes:  
+      - ./frontend:/frontend
+  web:
+    image: node:latest
+    depends_on: ["api", "db"]
+    volumes:
+      - ./backend:/backend
+    ports:
+      - "8080:8080"
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: gotz
+      MYSQL_DATABASE: my_database
+    ports:
+      - "3307:3307"
